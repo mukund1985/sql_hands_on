@@ -1,3 +1,4 @@
+-- Create a table named 'Persons' with columns for Person ID, last name, first name, address, and city
 CREATE TABLE Persons (
     PersonID int,
     LastName VARCHAR(255),
@@ -6,8 +7,9 @@ CREATE TABLE Persons (
     City VARCHAR(255)
 );
 
+-- Insert records into the 'Persons' table
 INSERT INTO Persons (PersonID, LastName, FirstName, Address, City)
-VALUES (1,'Smith','John','31 Central Park','New York')
+VALUES (1, 'Smith', 'John', '31 Central Park', 'New York');
 
 INSERT INTO Persons (PersonID, LastName, FirstName, Address, City)
 VALUES (2, 'Johnson', 'Emily', '22 Lakeview St.', 'Chicago');
@@ -36,19 +38,19 @@ VALUES (9, 'Taylor', 'Christopher', '238 Spruce St.', 'Atlanta');
 INSERT INTO Persons (PersonID, LastName, FirstName, Address, City)
 VALUES (10, 'Anderson', 'Stephanie', '111 Maple Dr.', 'Las Vegas');
 
+-- Retrieve all records from the 'Persons' table
+SELECT * FROM Persons;
 
-SELECT * FROM Persons
-
-
--- Add a unique constraint
+-- The following commented code would add a unique constraint to ensure no duplicate records are created
 -- ALTER TABLE Persons ADD CONSTRAINT uc_PersonInfo UNIQUE (LastName, FirstName, Address, City);
 
+-- The following commented code would find any duplicate records based on LastName, FirstName, Address, and City
 -- SELECT LastName, FirstName, Address, City, COUNT(*)
 -- FROM Persons
 -- GROUP BY LastName, FirstName, Address, City
 -- HAVING COUNT(*) > 1;
 
-
+-- The following commented code would delete duplicate records, retaining the first entry of each set of duplicates
 -- ;WITH Cte AS (
 --     SELECT *,
 --            ROW_NUMBER() OVER (PARTITION BY LastName, FirstName, Address, City ORDER BY PersonID) AS rn
@@ -57,10 +59,11 @@ SELECT * FROM Persons
 -- DELETE FROM Cte
 -- WHERE rn > 1;
 
-
+-- Switch to the 'master' database to perform operations at the server level
 USE master;
 GO
 
+-- Check if the database 'temp_Delete' exists and create it if not
 IF NOT EXISTS (
       SELECT name
       FROM sys.databases
@@ -69,6 +72,7 @@ IF NOT EXISTS (
    CREATE DATABASE [temp_Delete];
 GO
 
+-- Enable Query Store for 'temp_Delete' database if the SQL Server version is greater than 12
 IF SERVERPROPERTY('ProductVersion') > '12'
    ALTER DATABASE [temp_Delete] SET QUERY_STORE = ON;
 GO
