@@ -58,4 +58,17 @@ SELECT * FROM Persons
 -- WHERE rn > 1;
 
 
+USE master;
+GO
 
+IF NOT EXISTS (
+      SELECT name
+      FROM sys.databases
+      WHERE name = N'temp_Delete'
+      )
+   CREATE DATABASE [temp_Delete];
+GO
+
+IF SERVERPROPERTY('ProductVersion') > '12'
+   ALTER DATABASE [temp_Delete] SET QUERY_STORE = ON;
+GO
