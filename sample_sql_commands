@@ -78,28 +78,56 @@ IF SERVERPROPERTY('ProductVersion') > '12'
 GO
 
 
-use SuperstoreUS
+-- Set the context to use the SuperstoreUS database
+use SuperstoreUS;
 
-SELECT * from Orders_East
+-- Retrieve all records from the Orders_East table
+SELECT * FROM Orders_East;
 
-select * from Orders_East ORDER by City
+-- Retrieve all records from the Orders_East table, sorted by the City column
+SELECT * FROM Orders_East ORDER BY City;
 
-select * from Orders_East ORDER by Sales DESC
+-- Retrieve all records from the Orders_East table, sorted by the Sales column in descending order
+SELECT * FROM Orders_East ORDER BY Sales DESC;
 
+-- Retrieve all records from the Orders_East table, sorted by the Quantity column in descending order
+SELECT * FROM Orders_East ORDER BY Quantity DESC;
 
-select * from Orders_East 
-ORDER by Quantity DESC
+-- Retrieve all records from the Orders_East table, sorted first by State and then by Sales in descending order
+SELECT * FROM Orders_East ORDER BY State, Sales DESC;
 
+-- Retrieve the top 10 records from the Orders_East table
+SELECT TOP (10) * FROM Orders_East;
 
-select * from Orders_East 
-order by State, sales DESC
+-- Retrieve the top 10 records from the Orders_East table sorted by Sales in descending order
+SELECT TOP (10) * FROM Orders_East ORDER BY Sales DESC;
 
--- top 10
+-- Retrieve distinct categories from the Orders_East table
+SELECT DISTINCT Category FROM Orders_East;
 
-SELECT top(10) * from Orders_East
+-- Retrieve distinct segments from the Orders_East table and alias the column as 'Unique Cust Seg'
+SELECT DISTINCT Segment AS "Unique Cust Seg" FROM Orders_East;
 
-SELECT top(10) * from Orders_East order by Sales desc
+-- Retrieve all records from the Orders_East table where the Category is 'Furniture'
+SELECT * FROM Orders_East WHERE Category = 'Furniture';
 
-select distinct (Category) from Orders_East 
+-- Retrieve all records from the Orders_East table where the Segment is 'Corporate'
+SELECT * FROM Orders_East WHERE Segment = 'Corporate';
 
-select distinct (Segment) from Orders_East
+-- Retrieve all records from the Orders_East table where the Category is 'Furniture' and the Segment is 'Corporate'
+SELECT * FROM Orders_East WHERE Category = 'Furniture' AND Segment = 'Corporate';
+
+-- Retrieve distinct Sub-Categories from the Orders_East table
+SELECT DISTINCT [Sub-Category] FROM Orders_East;
+
+-- Retrieve all records from the Orders_East table where the Sub-Category is either 'Phones', 'Art', 'Labels', or 'Paper'
+SELECT * FROM Orders_East WHERE [Sub-Category] IN ('Phones', 'Art', 'Labels', 'Paper');
+
+-- Retrieve all records from the Orders_East table where the Product Name contains 'printer'
+SELECT * FROM Orders_East WHERE [Product Name] LIKE '%printer%';
+
+-- Retrieve all records from the Orders_East table where the Product Name contains 'printer' and the Order Date is after January 1, 2017
+SELECT * FROM Orders_East WHERE [Product Name] LIKE '%printer%' AND [Order Date] > '1 Jan 2017';
+
+-- Retrieve all records from the Orders_East table where the Product Name contains 'printer', the Order Date is after January 1, 2017, and the Profit is negative
+SELECT * FROM Orders_East WHERE [Product Name] LIKE '%printer%' AND [Order Date] > '1 Jan 2017' AND [Profit] < 0;
