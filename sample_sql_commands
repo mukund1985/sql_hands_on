@@ -76,3 +76,30 @@ GO
 IF SERVERPROPERTY('ProductVersion') > '12'
    ALTER DATABASE [temp_Delete] SET QUERY_STORE = ON;
 GO
+
+
+use SuperstoreUS
+
+SELECT * from Orders_East
+
+select * from Orders_East ORDER by City
+
+select * from Orders_East ORDER by Sales DESC
+
+
+select * from Orders_East 
+ORDER by Quantity DESC
+
+
+select * from Orders_East 
+order by State, sales DESC
+
+-- top 10
+
+SELECT top(10) * from Orders_East
+
+SELECT top(10) * from Orders_East order by Sales desc
+
+select distinct (Category) from Orders_East 
+
+select distinct (Segment) from Orders_East
