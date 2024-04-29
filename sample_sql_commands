@@ -131,3 +131,95 @@ SELECT * FROM Orders_East WHERE [Product Name] LIKE '%printer%' AND [Order Date]
 
 -- Retrieve all records from the Orders_East table where the Product Name contains 'printer', the Order Date is after January 1, 2017, and the Profit is negative
 SELECT * FROM Orders_East WHERE [Product Name] LIKE '%printer%' AND [Order Date] > '1 Jan 2017' AND [Profit] < 0;
+
+/* 
+Topics for Today:
+   - Aggregate queries
+   - GROUP BY
+   - HAVING
+   - UNION
+   - Joins
+   - Visual Query Designer
+*/
+
+-- Counting the total number of rows in the Orders_East table
+SELECT COUNT(*) AS "Num of Rows" FROM Orders_East;
+
+-- Counting the total number of rows in the Orders_South table
+SELECT COUNT(*) FROM Orders_South;
+
+-- Retrieving all records from the Orders_East table
+SELECT * FROM Orders_East;
+
+-- Calculating the total sales from the Orders_East table
+SELECT SUM(Sales) AS "Total Sales" FROM Orders_East;
+
+-- Retrieving all records from the Orders_Central table
+SELECT * FROM Orders_Central;
+
+-- Calculating the total sales from the Orders_Central table
+SELECT SUM(Sales) AS "Total Sales" FROM Orders_Central;
+
+-- Calculating the average sales from the Orders_East table
+SELECT AVG(Sales) AS "Average Sales" FROM Orders_East;
+
+-- Calculating the average sales from the Orders_Central table
+SELECT AVG(Sales) AS "Average Sales" FROM Orders_Central;
+
+-- Summing sales by state from the Orders_East table and ordering by the total sales descending
+SELECT State, SUM(Sales) AS "Total Sales"
+FROM Orders_East
+GROUP BY State
+ORDER BY SUM(Sales) DESC;
+
+-- Summing sales by state and city from the Orders_East table and ordering by total sales descending
+SELECT State, City, SUM(Sales) AS "Total Sales"
+FROM Orders_East
+GROUP BY State, City
+ORDER BY SUM(Sales) DESC;
+
+-- Summing sales by state from the Orders_Central table and ordering by total sales descending
+SELECT State, SUM(Sales) AS "Total Sales"
+FROM Orders_Central
+GROUP BY State
+ORDER BY SUM(Sales) DESC;
+
+-- Summing sales by state and city from the Orders_East table for New York state
+SELECT State, City, SUM(Sales) AS "Total Sales"
+FROM Orders_East
+WHERE State = 'New York'
+GROUP BY State, City;
+
+-- Summing sales by state and city from the Orders_Central table for Texas
+SELECT State, City, SUM(Sales) AS "Total Sales"
+FROM Orders_Central
+WHERE State = 'Texas'
+GROUP BY State, City;
+
+-- Using HAVING to filter grouped data by state from the Orders_East table for New York
+SELECT State, City, SUM(Sales) AS "Total Sales"
+FROM Orders_East
+GROUP BY State, City
+HAVING State = 'New York';
+
+-- Using HAVING to filter grouped data by state and minimum total sales from the Orders_East table for New York
+SELECT State, City, SUM(Sales) AS "Total Sales"
+FROM Orders_East
+GROUP BY State, City
+HAVING State = 'New York' AND SUM(Sales) > 1000;
+
+-- Using HAVING to filter grouped data by state and minimum total sales from the Orders_Central table for Texas
+SELECT State, City, SUM(Sales) AS "Total Sales"
+FROM Orders_Central
+GROUP BY State, City
+HAVING State = 'Texas' AND SUM(Sales) > 1000;
+
+-- Combining all records from Orders_East and Orders_Central tables with duplicate removal
+SELECT * FROM Orders_East
+UNION
+SELECT * FROM Orders_Central;
+
+-- Combining all records from Orders_East and Orders_Central tables including duplicates
+SELECT * FROM Orders_East
+UNION ALL
+SELECT * FROM Orders_Central;
